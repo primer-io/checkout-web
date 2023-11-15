@@ -1,0 +1,31 @@
+{
+  "name": "@primer-io/checkout",
+  "private": true,
+  "version": "2.x.x",
+  "type": "module",
+  "workspaces": [
+    "examples/*"
+  ],
+  "scripts": {
+    "lint": "concurrently bun:lint:*",
+    "lint:commit": "commitlint --from origin/main --to HEAD --verbose",
+    "lint:es": "eslint . --ignore-path .gitignore --report-unused-disable-directives --max-warnings 0",
+    "lint:ts": "tsc --noEmit",
+    "lint:prettier": "prettier . --check --ignore-path .gitignore",
+    "format": "prettier . --write --ignore-path .gitignore",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^18.4.0",
+    "@typescript-eslint/eslint-plugin": "^6.11.0",
+    "@typescript-eslint/parser": "^6.11.0",
+    "@vitest/coverage-v8": "^0.34.6",
+    "commitlint": "^18.4.1",
+    "concurrently": "^8.2.2",
+    "eslint": "^8.53.0",
+    "prettier-plugin-organize-imports": "^3.2.4",
+    "typescript": "^5.2.2",
+    "vitest": "^0.34.6"
+  }
+}

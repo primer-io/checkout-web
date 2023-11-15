@@ -1,0 +1,25 @@
+{
+  "name": "@primer-io/example-server-node-fastify",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "author": "@primer-io",
+  "license": "MIT",
+  "scripts": {
+    "start": "concurrently npm:start:*",
+    "start:build": "npm run build -- --watch",
+    "start:server": "node --watch dist/server.js",
+    "prestart": "npm run build",
+    "build": "esbuild src/server.ts --bundle --format=esm --outfile=dist/server.js --packages=external --platform=node --target=esnext"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "fastify": "^4.24.3",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "esbuild": "^0.19.5",
+    "typescript": "^5.2.2"
+  }
+}

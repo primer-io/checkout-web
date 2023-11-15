@@ -1,0 +1,17 @@
+{
+  "name": "@primer-io/example-cobadged",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "author": "@primer-io",
+  "license": "MIT",
+  "scripts": {
+    "start": "astro dev --open",
+    "build": "astro check && astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@primer-io/checkout-web": "^2.34.0",
+    "astro": "^3.4.3"
+  }
+}

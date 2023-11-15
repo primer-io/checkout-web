@@ -1,0 +1,14 @@
+{
+  "name": "@primer-io/example-server-bun-elysia",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "author": "@primer-io",
+  "license": "MIT",
+  "scripts": {
+    "start": "bun run --watch src/index.ts"
+  },
+  "dependencies": {
+    "elysia": "^0.7.25"
+  }
+}
