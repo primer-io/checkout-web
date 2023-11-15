@@ -1,0 +1,44 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Card form">
+  <form>
+    <label>
+      Card number
+      <input name="cardNumber" autocomplete="cc-number" />
+    </label>
+    <div>
+      <label>
+        Card security code
+        <input name="securityCode" autocomplete="cc-csc" />
+      </label>
+      <label>
+        Card expiry date
+        <input name="expiryDate" autocomplete="cc-exp" />
+      </label>
+    </div>
+    <label>
+      Cardholder name
+      <input name="cardholderName" autocomplete="cc-name" />
+    </label>
+  </form>
+</Layout>
+
+<style lang="scss">
+  form {
+    display: grid;
+    gap: 16px;
+    place-content: center;
+    place-items: stretch;
+  }
+
+  div {
+    display: flex;
+    gap: 16px;
+  }
+
+  label {
+    display: grid;
+  }
+</style>

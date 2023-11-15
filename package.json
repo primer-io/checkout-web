@@ -1,12 +1,26 @@
 {
   "name": "@primer-io/checkout",
+  "version": "3.0.0",
+  "license": "MIT",
   "private": true,
-  "version": "2.x.x",
   "type": "module",
   "workspaces": [
-    "examples/*/*"
+    "examples/*/*",
+    "packages/*",
+    "packages/vue/vue3",
+    "server",
+    "stories",
+    "web"
   ],
   "scripts": {
+    "start": "concurrently bun:start:*",
+    "start:server": "bun --cwd server start",
+    "start:storybook": "bun --cwd stories start",
+    "start:web": "bun --cwd web start",
+    "build": "concurrently bun:build:*",
+    "build:server": "bun --cwd server build",
+    "build:storybook": "bun --cwd stories build",
+    "build:web": "bun --cwd web build",
     "lint": "concurrently bun:lint:*",
     "lint:commit": "commitlint --from origin/main --to HEAD --verbose",
     "lint:es": "eslint . --ignore-path .gitignore --report-unused-disable-directives --max-warnings 0",
@@ -20,11 +34,11 @@
     "update": "bunx npm-check-updates --root -u -ws && bun i"
   },
   "devDependencies": {
-    "@commitlint/config-conventional": "^18.4.0",
+    "@commitlint/config-conventional": "^18.4.2",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "@typescript-eslint/parser": "^6.11.0",
     "@vitest/coverage-v8": "^0.34.6",
-    "commitlint": "^18.4.1",
+    "commitlint": "^18.4.2",
     "concurrently": "^8.2.2",
     "eslint": "^8.53.0",
     "prettier": "^3.1.0",

@@ -1,0 +1,25 @@
+{
+  "name": "@primer-io/checkout-stories",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "storybook dev -p 6006",
+    "build": "storybook build -o ../storybook-static"
+  },
+  "devDependencies": {
+    "@storybook/addon-essentials": "^7.5.3",
+    "@storybook/addon-interactions": "^7.5.3",
+    "@storybook/addon-links": "^7.5.3",
+    "@storybook/blocks": "^7.5.3",
+    "@storybook/react": "^7.5.3",
+    "@storybook/react-vite": "^7.5.3",
+    "@storybook/testing-library": "^0.2.2",
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15",
+    "eslint-plugin-storybook": "^0.6.15",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "storybook": "^7.5.3"
+  }
+}

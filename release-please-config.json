@@ -1,0 +1,15 @@
+{
+  "packages": {
+    "packages/preact": {},
+    "packages/qwik": {},
+    "packages/react": {},
+    "packages/react-native": {},
+    "packages/solid": {},
+    "packages/svelte": {},
+    "packages/vue/vue3": {}
+  },
+  "prerelease-type": "next",
+  "prerelease": true,
+  "release-type": "node",
+  "tag-separator": "@"
+}

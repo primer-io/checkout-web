@@ -1,0 +1,21 @@
+---
+type Props = astroHTML.JSX.IntrinsicElements['input'];
+---
+
+<input
+  {...Astro.props}
+  autocapitalize="off"
+  autocomplete="off"
+  autocorrect="off"
+  spellcheck="false"
+/>
+
+<style>
+  input {
+    border: 1px solid black;
+    border-radius: 4px;
+    height: 48px;
+    min-width: 0;
+    padding: 8px;
+  }
+</style>

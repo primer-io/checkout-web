@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.json",
+  "include": ["."],
+  "compilerOptions": {
+    // "baseUrl": "./",
+    // "moduleResolution": "Node",
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+
+    // "allowSyntheticDefaultImports": true,
+    // "esModuleInterop": true,
+
+    "types": ["solid-start/env"]
+  }
+}

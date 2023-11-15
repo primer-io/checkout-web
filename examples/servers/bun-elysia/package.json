@@ -9,6 +9,6 @@
     "start": "bun run --watch src/index.ts"
   },
   "dependencies": {
-    "elysia": "^0.7.25"
+    "elysia": "^0.7.28"
   }
 }

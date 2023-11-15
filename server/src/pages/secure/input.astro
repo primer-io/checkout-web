@@ -1,0 +1,10 @@
+---
+import SecureInput from '../../components/SecureInput.astro';
+import Layout from '../../layouts/Layout.astro';
+
+const searchParams = Object.fromEntries(Astro.url.searchParams);
+---
+
+<Layout title="Primer secure input">
+  <SecureInput {...searchParams} />
+</Layout>

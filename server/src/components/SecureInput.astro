@@ -1,0 +1,21 @@
+---
+import Input from './Input.astro';
+type Props = astroHTML.JSX.IntrinsicElements['input'];
+---
+
+<Input {...Astro.props} is="primer-secure" />
+
+<script>
+  class PrimerSecureInput extends HTMLInputElement {
+    constructor() {
+      super();
+      this.addEventListener('input', () => {
+        sessionStorage.setItem(this.name, this.value);
+      });
+    }
+  }
+
+  customElements.define('primer-secure', PrimerSecureInput, {
+    extends: 'input',
+  });
+</script>

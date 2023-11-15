@@ -1,0 +1,35 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const src = 'https://primer-checkout.vercel.app/test';
+---
+
+<Layout title="Card form">
+  <form>
+    <iframe src=`${src}/number`></iframe>
+    <div>
+      <iframe src=`${src}/csc`></iframe>
+      <iframe src=`${src}/exp`></iframe>
+    </div>
+    <iframe src=`${src}/name`></iframe>
+  </form>
+</Layout>
+
+<style lang="scss">
+  form {
+    display: grid;
+    gap: 16px;
+    place-content: center;
+    place-items: stretch;
+  }
+
+  div {
+    display: flex;
+    gap: 16px;
+  }
+
+  iframe {
+    border: 0;
+    height: 48px;
+  }
+</style>

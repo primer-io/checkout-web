@@ -1,0 +1,9 @@
+{
+  "packages/preact": "2.0.0",
+  "packages/qwik": "2.0.0",
+  "packages/react": "2.0.0",
+  "packages/react-native": "2.0.0",
+  "packages/solid": "2.0.0",
+  "packages/svelte": "2.0.0",
+  "packages/vue/vue3": "2.0.0"
+}
