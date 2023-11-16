@@ -9,12 +9,11 @@ on:
     branches:
       - main
 
-permissions:
-  pull-request: write
-
 jobs:
   lint:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - uses: actions/checkout@v3
 
