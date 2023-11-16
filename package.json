@@ -25,7 +25,7 @@
     "lint:commit": "commitlint --from origin/main --to HEAD --verbose",
     "lint:es": "eslint . --ignore-path .gitignore --report-unused-disable-directives --max-warnings 0",
     "lint:prettier": "prettier . --ignore-path .gitignore --check",
-    "lint:ts": "echo 'Ignored for now...'",
+    "lint:ts": "concurrently 'tsc -p server' 'tsc -p stories' 'tsc -p web'",
     "format": "concurrently bun:format:*",
     "format:es": "bun run lint:es --fix",
     "format:prettier": "prettier . --ignore-path .gitignore --write",

@@ -1,5 +1,4 @@
 {
-  "include": ["web"],
   "compilerOptions": {
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "module": "ESNext",
