@@ -8,6 +8,7 @@ export default defineConfig({
       include: ['server/src', 'web/src'],
       exclude: ['**/*.{d,lite,stories}.ts', '**/*.tsx', '**/{env,index}.ts'],
       provider: 'v8',
+      reporter: ['text', 'html', 'clover', 'json', 'json-summary'],
     },
   },
 });
