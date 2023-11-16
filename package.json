@@ -10,11 +10,14 @@
     "lint": "concurrently bun:lint:*",
     "lint:commit": "commitlint --from origin/main --to HEAD --verbose",
     "lint:es": "eslint . --ignore-path .gitignore --report-unused-disable-directives --max-warnings 0",
+    "lint:prettier": "prettier . --ignore-path .gitignore --check",
     "lint:ts": "tsc --noEmit",
-    "lint:prettier": "prettier . --check --ignore-path .gitignore",
-    "format": "prettier . --write --ignore-path .gitignore",
+    "format": "concurrently bun:format:*",
+    "format:es": "bun run lint:es --fix",
+    "format:prettier": "prettier . --ignore-path .gitignore --write",
     "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "update": "bunx npm-check-updates --root -u -ws && bun i"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^18.4.0",
