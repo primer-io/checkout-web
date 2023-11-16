@@ -4,7 +4,7 @@
   "version": "2.x.x",
   "type": "module",
   "workspaces": [
-    "examples/*"
+    "examples/*/*"
   ],
   "scripts": {
     "lint": "concurrently bun:lint:*",
@@ -24,6 +24,7 @@
     "commitlint": "^18.4.1",
     "concurrently": "^8.2.2",
     "eslint": "^8.53.0",
+    "prettier": "^3.1.0",
     "prettier-plugin-organize-imports": "^3.2.4",
     "typescript": "^5.2.2",
     "vitest": "^0.34.6"

@@ -1,5 +1,5 @@
 import { Elysia, t } from 'elysia';
-import { createClientSession } from '../api/createClientSession';
+import { createClientSession } from './api/createClientSession';
 
 const app = new Elysia({ aot: true })
   .get('/', () =>
