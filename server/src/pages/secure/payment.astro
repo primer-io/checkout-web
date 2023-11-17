@@ -24,6 +24,7 @@ const clientSession = createClientSession({
   amount: 100,
   currencyCode: 'GBP',
 });
+
 const paymentMethodToken = clientSession.then(async ({ clientToken }) => {
   const accessToken = parseAccessToken(clientToken);
   const paymentMethodToken = await createPaymentMethodToken(accessToken, {
@@ -35,8 +36,9 @@ const paymentMethodToken = clientSession.then(async ({ clientToken }) => {
   });
   return { accessToken, paymentMethodToken };
 });
+
 const payment = paymentMethodToken.then(({ accessToken, paymentMethodToken }) =>
-  createPayment(accessToken, paymentMethodToken)
+  createPayment(accessToken, paymentMethodToken),
 );
 ---
 

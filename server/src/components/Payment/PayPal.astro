@@ -1,0 +1,20 @@
+---
+import PaymentButton from './PaymentButton.astro';
+type Props = astroHTML.JSX.IntrinsicElements['button'];
+---
+
+<PaymentButton class="paypal" />
+
+<style lang="scss">
+  .paypal {
+    background-color: hsl(42 100% 61%);
+
+    &:hover {
+      background-color: hsl(42 100% 50%);
+    }
+
+    &:active {
+      background-color: hsl(42 100% 40%);
+    }
+  }
+</style>

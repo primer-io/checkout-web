@@ -1,0 +1,20 @@
+---
+import PaymentButton from '../Payment/PaymentButton.astro';
+type Props = astroHTML.JSX.IntrinsicElements['button'];
+---
+
+<PaymentButton class="klarna" />
+
+<style lang="scss">
+  .klarna {
+    background-color: hsl(344, 100%, 85%);
+
+    &:hover {
+      background-color: hsl(344, 94%, 87%);
+    }
+
+    &:active {
+      background-color: hsl(344, 90%, 90%);
+    }
+  }
+</style>

@@ -1,37 +1,38 @@
 ---
+import Klarna from '../components/Payment/Klarna.astro';
+import PayPal from '../components/Payment/PayPal.astro';
+import PaymentMethod from '../components/Payment/PaymentMethod.astro';
 import Layout from '../layouts/Layout.astro';
 
 const { url } = Astro;
-const src = 'https://goat-assets.production.core.primer.io';
+const goatSrc = 'https://goat-assets.production.core.primer.io';
 ---
 
 <Layout title="Primer store">
   <main>
     <article>
-      <details>
-        <summary>
-          <img src={`${src}/brand/logo/paypal/default.svg`} />
-          PayPal
-        </summary>
-        <div>
-          <button>Pay</button>
-        </div>
-      </details>
+      <PaymentMethod
+        label="PayPal"
+        logo={`${goatSrc}/brand/logo/paypal/default.svg`}
+      >
+        <PayPal />
+      </PaymentMethod>
 
-      <details>
-        <summary>
-          <img
-            src={`${src}/icon/credit-card/medium.svg`}
-            style={{ padding: '0 16px' }}
-          />
-          Pay with card
-        </summary>
-        <div>
-          <iframe
-            src={['/secure/card', url.searchParams].filter(Boolean).join('?')}
-          ></iframe>
-        </div>
-      </details>
+      <PaymentMethod
+        label="Klarna"
+        logo={`${goatSrc}/brand/logo/klarna/default.svg`}
+      >
+        <Klarna />
+      </PaymentMethod>
+
+      <PaymentMethod
+        label="Pay with card"
+        logo={`${goatSrc}/icon/credit-card/medium.svg`}
+      >
+        <iframe
+          src={['/secure/card', url.searchParams].filter(Boolean).join('?')}
+        ></iframe>
+      </PaymentMethod>
     </article>
   </main>
 </Layout>
@@ -52,76 +53,10 @@ const src = 'https://goat-assets.production.core.primer.io';
     min-width: 400px;
   }
 
-  details {
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    display: flex;
-    overflow: hidden;
-    place-content: center;
-    place-items: center;
-  }
-
-  summary {
-    box-sizing: border-box;
-    cursor: pointer;
-    display: flex;
-    gap: 12px;
-    height: 48px;
-    padding: 16px;
-    place-items: center;
-    transition: background-color 0.15s;
-
-    &:hover {
-      background-color: hsl(0 0% 90%);
-    }
-
-    &:active {
-      background-color: hsl(0 0% 80%);
-    }
-
-    &:before {
-      content: '';
-      border: 1px solid #757575;
-      border-radius: 100vw;
-      padding: 4px;
-      height: 20px;
-      width: 20px;
-
-      [open] > & {
-        background: radial-gradient(#212121 50%, transparent 55%);
-      }
-    }
-  }
-
-  div {
-    box-sizing: border-box;
-    display: grid;
-    padding: 16px;
-  }
-
   iframe {
     border: 0;
     height: 400px;
     width: 100%;
-  }
-
-  button {
-    background-color: hsl(42 100% 61%);
-    border: 0;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    height: 48px;
-    padding: 16px;
-    transition: background-color 0.15s;
-
-    &:hover {
-      background-color: hsl(42 100% 50%);
-    }
-
-    &:active {
-      background-color: hsl(42 100% 40%);
-    }
   }
 </style>
 
