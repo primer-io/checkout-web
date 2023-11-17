@@ -21,6 +21,7 @@
     "build:server": "bun --cwd server build",
     "build:storybook": "bun --cwd stories build",
     "build:web": "bun --cwd web build",
+    "postbuild:web": "bunx ts-autofix --project stories/tsconfig.json",
     "lint": "concurrently bun:lint:*",
     "lint:commit": "commitlint --from origin/main --to HEAD --verbose",
     "lint:es": "eslint . --ignore-path .gitignore --report-unused-disable-directives --max-warnings 0",

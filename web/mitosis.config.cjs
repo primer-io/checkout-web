@@ -27,7 +27,7 @@ module.exports = {
   options: {
     preact: { typescript: true },
     qwik: { typescript: true },
-    react: { typescript: true },
+    react: { typescript: true, stylesType: 'style-tag' },
     reactNative: { typescript: true },
     solid: { typescript: true },
     svelte: { typescript: true },

@@ -31,13 +31,10 @@ const searchParams = (props: Props) =>
 
 // eslint-disable-next-line @builder.io/mitosis/only-default-function-and-imports
 const inputProps = [
-  'inputmode',
   'inputMode',
   'max',
-  'maxlength',
   'maxLength',
   'min',
-  'minlength',
   'minLength',
   'name',
   'pattern',
