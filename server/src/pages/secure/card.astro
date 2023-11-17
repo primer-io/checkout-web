@@ -4,12 +4,11 @@ import Layout from '../../layouts/Layout.astro';
 
 const autofill = Astro.url.searchParams.has('autofill') || undefined;
 const autofocus = Astro.url.searchParams.has('autofocus') || undefined;
-const api = Astro.url.searchParams.has('api') || undefined;
 ---
 
 <Layout title="Primer secure card form">
   <main>
-    <form method="POST" action={api ? '/api/card' : '/secure/payment'}>
+    <form method="POST" action="/secure/payment">
       <label>
         Card number
         <Input

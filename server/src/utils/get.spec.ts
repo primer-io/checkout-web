@@ -2,14 +2,9 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { get } from './get';
 
 describe('get', () => {
-  const fetch = vi.spyOn(globalThis, 'fetch');
-
   beforeEach(() => {
     vi.clearAllMocks();
-
-    const json = {};
-    const response = { json: () => json };
-    fetch.mockResolvedValueOnce(response as any);
+    globalThis.fetch = vi.fn().mockResolvedValue({ json: () => ({}) } as any);
   });
 
   it('should fetch', async () => {
