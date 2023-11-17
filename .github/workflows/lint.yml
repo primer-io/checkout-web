@@ -23,6 +23,9 @@ jobs:
 
       - run: bun run lint:prettier
 
+      # needed for `lint:ts`
+      - run: bun run build:web
+
       - run: bun run lint:ts
 
       # needed for `commitlint`
