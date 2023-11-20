@@ -1,5 +1,5 @@
-import { post } from '../utils/post.js';
-import { primerApiUrl, primerHeaders } from './const.js';
+import { post } from '../utils/post.ts';
+import { primerApiUrl, primerHeaders } from './const.ts';
 
 export function createClientSession(info: Info) {
   return post<ClientSession>(

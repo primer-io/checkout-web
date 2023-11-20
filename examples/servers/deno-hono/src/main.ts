@@ -9,7 +9,7 @@ app.get('/', (c) =>
 );
 
 app.post('/client-session', async (c) => {
-  const { amount, currencyCode } = c.req.body as {
+  const { amount, currencyCode } = c.req.json() as {
     amount: number;
     currencyCode: string;
   };
