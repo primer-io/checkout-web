@@ -1,0 +1,72 @@
+---
+import Klarna from '../components/Payment/Klarna.astro';
+import PayPal from '../components/Payment/PayPal.astro';
+import PaymentMethod from '../components/Payment/PaymentMethod.astro';
+import Layout from '../layouts/Layout.astro';
+
+const { url } = Astro;
+const goatSrc = 'https://goat-assets.production.core.primer.io';
+---
+
+<Layout title="Primer store">
+  <main>
+    <article>
+      <PaymentMethod
+        label="PayPal"
+        logo={`${goatSrc}/brand/logo/paypal/default.svg`}
+      >
+        <PayPal />
+      </PaymentMethod>
+
+      <PaymentMethod
+        label="Klarna"
+        logo={`${goatSrc}/brand/logo/klarna/default.svg`}
+      >
+        <Klarna />
+      </PaymentMethod>
+
+      <PaymentMethod
+        label="Pay with card"
+        logo={`${goatSrc}/icon/credit-card/medium.svg`}
+      >
+        <iframe
+          src={['/secure/card', url.searchParams].filter(Boolean).join('?')}
+        ></iframe>
+      </PaymentMethod>
+    </article>
+  </main>
+</Layout>
+
+<style lang="scss">
+  main {
+    background-color: #eee;
+    display: grid;
+    place-items: center;
+  }
+
+  article {
+    background-color: #fff;
+    border-radius: 8px;
+    display: grid;
+    gap: 8px;
+    padding: 24px;
+    min-width: 400px;
+  }
+
+  iframe {
+    border: 0;
+    height: 400px;
+    width: 100%;
+  }
+</style>
+
+<script>
+  const details = document.querySelectorAll('details');
+
+  for (const target of details)
+    target.addEventListener('toggle', () => {
+      if (!target.open) return;
+      for (const element of details)
+        if (target !== element) element.open = false;
+    });
+</script>

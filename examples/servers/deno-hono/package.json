@@ -1,0 +1,8 @@
+{
+  "name": "@primer-io/example-server-deno-hono",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "author": "@primer-io",
+  "license": "MIT"
+}

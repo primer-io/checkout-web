@@ -1,0 +1,10 @@
+{
+  "name": "@primer-io/checkout-preact",
+  "version": "1.0.0",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "description": "Primer components for Preact",
+  "repository": "git@github.com:primer-io/checkout-web.git",
+  "author": "@primer-io"
+}

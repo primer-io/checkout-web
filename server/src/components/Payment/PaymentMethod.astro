@@ -1,0 +1,72 @@
+---
+type Props = astroHTML.JSX.IntrinsicElements['details'] & {
+  label: string;
+  logo: string;
+};
+
+const { children, label, logo, ...props } = Astro.props;
+---
+
+<details {...props}>
+  <summary>
+    <img src={logo} />
+    {label}
+  </summary>
+  <div>
+    <slot />
+  </div>
+</details>
+
+<style lang="scss">
+  details {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    display: flex;
+    overflow: hidden;
+    place-content: center;
+    place-items: center;
+  }
+
+  summary {
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    gap: 12px;
+    height: 48px;
+    padding: 16px;
+    place-items: center;
+    transition: background-color 0.15s;
+
+    &:hover {
+      background-color: hsl(0 0% 90%);
+    }
+
+    &:active {
+      background-color: hsl(0 0% 80%);
+    }
+
+    &:before {
+      content: '';
+      border: 1px solid #757575;
+      border-radius: 100vw;
+      padding: 4px;
+      height: 20px;
+      width: 20px;
+
+      [open] > & {
+        background: radial-gradient(#212121 50%, transparent 55%);
+      }
+    }
+  }
+
+  img {
+    aspect-ratio: 2/1;
+    width: 56px;
+  }
+
+  div {
+    box-sizing: border-box;
+    display: grid;
+    padding: 16px;
+  }
+</style>

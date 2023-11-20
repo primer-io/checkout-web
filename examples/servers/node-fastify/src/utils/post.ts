@@ -1,5 +1,3 @@
-import fetch from 'node-fetch';
-
 export async function post<T>(
   url: string,
   body: Record<string, unknown>,

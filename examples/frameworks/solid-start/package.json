@@ -1,0 +1,22 @@
+{
+  "name": "@primer-io/checkout-server-solid",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "solid-start dev --open",
+    "build": "solid-start build",
+    "deploy": "solid-start start"
+  },
+  "dependencies": {
+    "@solidjs/router": "^0.9.1",
+    "solid-styled-components": "^0.28.5",
+    "solid-js": "^1.8.5",
+    "solid-start": "^0.3.10"
+  },
+  "devDependencies": {
+    "@solidjs/meta": "^0.29.1",
+    "solid-start-vercel": "^0.3.10",
+    "vercel": "^32.5.5",
+    "vite": "^5.0.0"
+  }
+}

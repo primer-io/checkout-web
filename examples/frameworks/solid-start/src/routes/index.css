@@ -1,0 +1,49 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+}
+
+body {
+  display: grid;
+  font-family: Gordita, Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+    'Helvetica Neue', sans-serif;
+  height: 100vh;
+  margin: 0;
+  width: 100vw;
+}
+
+main {
+  display: grid;
+  place-items: center;
+}
+
+form {
+  border: 2px solid black;
+  border-radius: 8px;
+  display: grid;
+  gap: 16px;
+  padding: 24px;
+  place-items: center;
+}
+
+label {
+  display: grid;
+  gap: 4px;
+}
+
+input {
+  border: 1px solid black;
+  border-radius: 4px;
+  height: 40px;
+  padding: 8px;
+}
+
+iframe {
+  border: none;
+  height: 48px;
+}

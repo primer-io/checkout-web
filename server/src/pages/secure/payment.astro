@@ -1,0 +1,75 @@
+---
+import { createClientSession } from '../../api/createClientSession';
+import { createPayment } from '../../api/createPayment';
+import { createPaymentMethodToken } from '../../api/createPaymentMethodToken';
+import Layout from '../../layouts/Layout.astro';
+import { parseAccessToken } from '../../utils/parseAccessToken';
+
+const { request } = Astro;
+
+const data = Object.fromEntries(await request.formData()) as CreatePayment;
+
+type CreatePayment = {
+  cardNumber: string;
+  expiryDate: string;
+  name: string;
+  securityCode: string;
+};
+
+if (!data) throw new Error('Missing required fields');
+
+const [expirationMonth, year] = data.expiryDate.trim().split('/');
+
+const clientSession = createClientSession({
+  amount: 100,
+  currencyCode: 'GBP',
+});
+
+const paymentMethodToken = clientSession.then(async ({ clientToken }) => {
+  const accessToken = parseAccessToken(clientToken);
+  const paymentMethodToken = await createPaymentMethodToken(accessToken, {
+    cardholderName: data.name,
+    cvv: data.securityCode.trim(),
+    expirationMonth,
+    expirationYear: `${new Date().getFullYear().toString().slice(0, 2)}${year}`,
+    number: data.cardNumber.replaceAll(/\s/g, ''),
+  });
+  return { accessToken, paymentMethodToken };
+});
+
+const payment = paymentMethodToken.then(({ accessToken, paymentMethodToken }) =>
+  createPayment(accessToken, paymentMethodToken),
+);
+---
+
+<Layout title="Primer payment">
+  <main>
+    <p>Creating payment...</p>
+    {clientSession.then(() => <p>Session updated...</p>)}
+    {paymentMethodToken.then(() => <p>Payment method token created...</p>)}
+    {
+      payment.then((payment) => (
+        <>
+          <p>Payment created:</p>
+          <code>{JSON.stringify(payment, null, 2)}</code>
+        </>
+      ))
+    }
+  </main>
+</Layout>
+
+<style>
+  main {
+    overflow-x: hidden;
+  }
+
+  code {
+    background-color: #111;
+    border-radius: 4px;
+    color: #e0e0e0;
+    display: block;
+    padding: 8px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+</style>

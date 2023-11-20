@@ -1,0 +1,42 @@
+name: release PR
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  create:
+    runs-on: ubuntu-latest
+    outputs:
+      pr: ${{ steps.release.outputs.pr }}
+    steps:
+      - id: release
+        uses: google-github-actions/release-please-action@v3
+        with:
+          command: manifest
+          token: ${{ secrets.SECURITY_INTEGRATIONS_PAT }}
+
+  format:
+    runs-on: ubuntu-latest
+    needs: release-pr
+    if: needs.release-pr.outputs.pr
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+          ref: '${{ fromJSON(needs.release-pr.outputs.pr).headBranchName }}'
+          token: ${{ secrets.SECURITY_INTEGRATIONS_PAT }}
+
+      - uses: oven-sh/setup-bun@v1
+
+      - run: bun i --frozen-lockfile
+
+      - run: bun run format
+
+      - name: ammend release-please's commit
+        run: |
+          git config user.name '$GITHUB_ACTOR'
+          git config user.email '$GITHUB_ACTOR@users.noreply.github.com'
+          git commit -a --amend --no-edit
+          git push -f -u origin HEAD
