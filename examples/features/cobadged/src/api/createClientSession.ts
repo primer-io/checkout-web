@@ -1,21 +1,17 @@
 import { post } from '../utils/post';
 import { primerApiUrl, primerHeaders } from './const';
 
-export function createClientSession(info: Info) {
+export function createClientSession() {
   return post<ClientSession>(
     `${primerApiUrl}/client-session`,
     {
-      ...info,
+      amount: 100,
+      currencyCode: 'GBP',
       orderId: crypto.randomUUID(),
     },
     primerHeaders,
   );
 }
-
-type Info = {
-  amount: number;
-  currencyCode: string;
-};
 
 type ClientSession = {
   clientToken: string;

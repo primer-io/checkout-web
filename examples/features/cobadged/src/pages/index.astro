@@ -2,10 +2,7 @@
 import { createClientSession } from '../api/createClientSession';
 import Layout from '../layouts/Layout.astro';
 
-const { clientToken } = await createClientSession({
-  amount: 100,
-  currencyCode: 'GBP',
-});
+const { clientToken } = await createClientSession();
 
 const cardNumberId = 'card-number';
 const cardSecurityCodeId = 'card-security-code';
@@ -63,8 +60,6 @@ const cardExpiryId = 'card-expiry';
 
   await import('https://sdk.dev.primer.io/web/preview-1579/Primer.min.js');
 
-  const cdn = 'https://goat-assets.production.core.primer.io/brand/card';
-
   const { Primer } = window as any as {
     Primer: (typeof import('@primer-io/checkout-web'))['Primer'];
   };
@@ -75,6 +70,8 @@ const cardExpiryId = 'card-expiry';
 
   const primer = await Primer.createHeadless(clientToken || '');
   const cardForm = document.querySelector('#card') as HTMLFormElement;
+  const assets = primer.getAssetsManager();
+  const cardNetworksElement = document.getElementById('card-networks')!;
 
   primer.configure({
     onCheckoutFail(error, data, handler) {
@@ -95,32 +92,47 @@ const cardExpiryId = 'card-expiry';
             const cardManager = await primer.createPaymentMethodManager(
               'PAYMENT_CARD',
               {
-                onCardNetworksChange(
-                  cardNetworks: { displayName: string; value: string }[],
-                ) {
-                  const cardNetworkElement =
-                    document.getElementById('card-networks')!;
-                  cardNetworkElement.style.display = cardNetworks.length
+                onCardNetworksChange({
+                  allowedCardNetworks,
+                  canSelectCardNetwork,
+                }: {
+                  allowedCardNetworks: { value: string }[];
+                  canSelectCardNetwork: boolean;
+                }) {
+                  cardNetworksElement.style.display = allowedCardNetworks.length
                     ? ''
                     : 'none';
-                  cardNetworkElement.innerHTML = '';
-                  cardNetworks.forEach((cardNetwork, index) => {
-                    const option = document.createElement('input');
-                    option.ariaLabel = cardNetwork.displayName;
-                    option.checked = !index;
-                    option.name = 'card-network';
-                    option.innerText = cardNetwork.displayName;
-                    // TODO: remove replace when CartesBancaires logo is up
-                    const logo = cardNetwork.value
-                      .toLowerCase()
-                      .replace('cartes_bancaires', 'jcb');
-                    option.style.backgroundImage = `url(${cdn}/${logo}.svg)`;
-                    option.type = 'radio';
-                    option.value = cardNetwork.value;
-                    cardNetworkElement.append(option);
+                  cardNetworksElement.innerHTML = '';
+
+                  allowedCardNetworks.forEach(async ({ value }, index) => {
+                    const asset = await assets.getCardNetworkAsset(value);
+
+                    const label = document.createElement('label');
+                    label.style.display = 'flex';
+                    label.style.placeContent = 'center';
+                    label.style.placeItems = 'center';
+
+                    const input = document.createElement('input');
+                    input.ariaLabel = asset.alt;
+                    input.checked = !index;
+                    input.name = 'preferredNetwork';
+                    input.type = 'radio';
+                    input.value = value;
+                    input.style.margin = '4px';
+
+                    const img = document.createElement('img');
+                    img.alt = asset.alt;
+                    img.src = asset.src;
+
+                    if (canSelectCardNetwork) label.append(input);
+                    label.append(img);
+                    cardNetworksElement.append(label);
                   });
                 },
-              } as any,
+                onCardNetworksLoading() {
+                  cardNetworksElement.innerHTML = 'Loading card networks...';
+                },
+              },
             );
 
             const { cardNumberInput, cvvInput, expiryInput } =
@@ -207,9 +219,9 @@ const cardExpiryId = 'card-expiry';
   }
 
   .row {
-    display: grid;
+    display: flex;
     gap: 8px;
-    grid-auto-flow: column;
+    flex-flow: column wrap;
   }
 
   button,
@@ -221,8 +233,9 @@ const cardExpiryId = 'card-expiry';
 
   #card-networks {
     display: flex;
+    flex-wrap: wrap;
     gap: 8px;
-    padding-top: 18px;
+    min-height: 32px;
     place-items: center;
   }
 </style>
@@ -230,18 +243,5 @@ const cardExpiryId = 'card-expiry';
 <style is:inline>
   iframe {
     max-height: 40px;
-  }
-
-  [name='card-network'] {
-    aspect-ratio: 28/20;
-    appearance: unset;
-    background-size: cover;
-    display: block;
-    height: 32px;
-    margin: 0;
-  }
-
-  [name='card-network']:not(:checked) {
-    opacity: 0.5;
   }
 </style>
