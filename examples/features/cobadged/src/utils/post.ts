@@ -1,6 +1,6 @@
 export async function post<T>(
   url: string,
-  body: Record<string, unknown>,
+  body?: Record<string, unknown>,
   headers?: HeadersInit,
 ) {
   const response = await fetch(url, {

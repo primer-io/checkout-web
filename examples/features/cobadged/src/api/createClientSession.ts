@@ -13,6 +13,6 @@ export function createClientSession() {
   );
 }
 
-type ClientSession = {
+export type ClientSession = {
   clientToken: string;
 };
