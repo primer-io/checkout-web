@@ -13,5 +13,8 @@
   "dependencies": {
     "@primer-io/checkout-web": "^2.35.1",
     "astro": "^3.4.3"
+  },
+  "devDependencies": {
+    "sass": "^1.69.7"
   }
 }
