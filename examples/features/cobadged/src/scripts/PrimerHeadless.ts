@@ -97,9 +97,6 @@ async function configureCard() {
         // either display the only network in a single-badge card,
         // or create options for customer to select network in co-badged card
         allowedCardNetworks.forEach(async ({ value }, index) => {
-          // TODO: remove asset override
-          if (value === 'CARTES_BANCAIRES') value = 'JCB';
-
           const asset = await assets.getCardNetworkAsset(value);
 
           const label = document.createElement('label');
