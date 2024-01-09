@@ -136,7 +136,10 @@ async function configureCard() {
   cardForm.addEventListener('submit', (event) => {
     event.preventDefault();
     cardForm.querySelector('button')!.disabled = true;
-    const preferredNetwork = cardForm.elements.namedItem('preferredNetwork');
+    const form = cardForm.elements as unknown as {
+      preferredNetwork: HTMLInputElement;
+    };
+    const preferredNetwork = form.preferredNetwork.value;
     cardManager?.submit({ preferredNetwork });
   });
 
