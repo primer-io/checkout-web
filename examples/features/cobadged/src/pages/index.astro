@@ -12,7 +12,7 @@ import Layout from '../layouts/Layout.astro';
             <input disabled placeholder="4321 1234 9876 6789" />
           </div>
 
-          <div id="card-network" class="flow" style={{ display: 'none' }}></div>
+          <div id="card-network" class="flow ghost"></div>
         </div>
       </label>
 
@@ -29,7 +29,7 @@ import Layout from '../layouts/Layout.astro';
         <label>
           Security code
           <div id="card-security-code">
-            <input disabled placeholder="⏺⏺⏺" />
+            <input disabled placeholder="•••" />
           </div>
         </label>
       </div>
@@ -66,22 +66,27 @@ import Layout from '../layouts/Layout.astro';
 
   button,
   input {
+    font-size: 1rem;
     height: 40px;
     padding: 8px;
     width: 100%;
   }
 
   .row {
+    align-items: center;
     display: grid;
     gap: 8px;
     grid-auto-flow: column;
-    align-items: center;
   }
 
   .flow {
     display: flex;
     gap: 8px;
     flex-flow: row wrap;
+  }
+
+  .ghost:empty {
+    display: none;
   }
 </style>
 

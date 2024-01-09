@@ -86,14 +86,11 @@ async function configureCard() {
             supportedCardNetworksElement.append(img);
           });
 
+        // reset element state
+        cardNetworkElement.innerHTML = '';
+
         // only trust 'REMOTE' or 'LOCAL-FALLBACK' sources for co-badged
         if (source === 'LOCAL') return;
-
-        // reset element state
-        cardNetworkElement.style.display = allowedCardNetworks.length
-          ? ''
-          : 'none';
-        cardNetworkElement.innerHTML = '';
 
         // either display the only network in a single-badge card,
         // or create options for customer to select network in co-badged card
