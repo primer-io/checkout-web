@@ -8,6 +8,9 @@ export function createClientSession() {
       amount: 100,
       currencyCode: 'GBP',
       orderId: crypto.randomUUID(),
+      order: {
+        countryCode: 'GB',
+      },
     },
     primerHeaders,
   );

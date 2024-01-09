@@ -5,4 +5,4 @@ export const primerHeaders = {
   'X-API-VERSION': '2.2',
 };
 
-export const primerApiUrl = 'https://api.sandbox.primer.io';
+export const primerApiUrl = 'https://api.staging.primer.io';
