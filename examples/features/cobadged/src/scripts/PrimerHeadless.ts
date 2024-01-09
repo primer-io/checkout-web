@@ -132,9 +132,9 @@ async function configureCard() {
     event.preventDefault();
     cardForm.querySelector('button')!.disabled = true;
     const form = cardForm.elements as unknown as {
-      preferredNetwork: RadioNodeList;
+      preferredNetwork?: RadioNodeList;
     };
-    const preferredNetwork = form.preferredNetwork.value;
+    const preferredNetwork = form.preferredNetwork?.value;
     cardManager?.submit({ preferredNetwork });
   });
 
