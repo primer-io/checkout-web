@@ -24,7 +24,11 @@ primer.configure({
     errorElement.innerText = error.message;
   },
   onCheckoutComplete(data) {
-    cardForm.innerText = `Payment successful.\nOrderId: ${data.payment.orderId}`;
+    cardForm.innerHTML = `
+      <p>Payment successful.</p>
+      <p>Payment ID: <code>${data.payment.id}</code></p>
+      <p>Order ID: <code>${data.payment.orderId}</code></p>
+    `;
   },
   async onAvailablePaymentMethodsLoad(paymentMethods) {
     for (const paymentMethod of paymentMethods)
