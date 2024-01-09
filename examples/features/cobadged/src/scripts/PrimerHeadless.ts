@@ -71,6 +71,7 @@ async function configureCard() {
       {
         allowedCardNetworks: { value: string }[];
         canSelectCardNetwork: boolean;
+        source: 'LOCAL' | 'LOCAL_FALLBACK' | 'REMOTE';
       }) {
         // initialize list of all supported card networks
         if (!supportedCardNetworksElement.innerHTML)
@@ -85,7 +86,7 @@ async function configureCard() {
             supportedCardNetworksElement.append(img);
           });
 
-        // only trust 'REMOTE' or 'LOCAL-FALLBACK' sources for co-badge
+        // only trust 'REMOTE' or 'LOCAL-FALLBACK' sources for co-badged
         if (source === 'LOCAL') return;
 
         // reset element state
