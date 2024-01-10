@@ -75,61 +75,58 @@ primer.start();
 async function configureCard() {
   const cardNetworkElement = document.getElementById('card-network')!;
 
-  // TODO: remove casting "as any"
-  const cardManager = await (primer.createPaymentMethodManager as any)(
-    'PAYMENT_CARD',
+  // @ts-expect-error TODO: remove this comment when package has correct type
+  const cardManager = await primer.createPaymentMethodManager('PAYMENT_CARD', {
+    // this is the most important event for co-badged cards
+    onCardNetworksChange({
+      allowedCardNetworks,
+      canSelectCardNetwork,
+      source,
+    }: // TODO: remove type and infer from Primer
     {
-      // this is the most important event for co-badged cards
-      onCardNetworksChange({
-        allowedCardNetworks,
-        canSelectCardNetwork,
-        source,
-      }: // TODO: remove type and infer from Primer
-      {
-        allowedCardNetworks: { value: string }[];
-        canSelectCardNetwork: boolean;
-        source: 'LOCAL' | 'LOCAL_FALLBACK' | 'REMOTE';
-      }) {
-        // reset element state
-        cardNetworkElement.innerHTML = '';
+      allowedCardNetworks: { value: string }[];
+      canSelectCardNetwork: boolean;
+      source: 'LOCAL' | 'LOCAL_FALLBACK' | 'REMOTE';
+    }) {
+      // reset element state
+      cardNetworkElement.innerHTML = '';
 
-        // only trust 'REMOTE' or 'LOCAL-FALLBACK' sources for co-badged
-        if (source === 'LOCAL') return;
+      // only trust 'REMOTE' or 'LOCAL-FALLBACK' sources for co-badged
+      if (source === 'LOCAL') return;
 
-        // either display the only network in a single-badge card,
-        // or create options for customer to select network in co-badged card
-        allowedCardNetworks.forEach(async ({ value }, index) => {
-          const asset = await assets.getCardNetworkAsset(value);
+      // either display the only network in a single-badge card,
+      // or create options for customer to select network in co-badged card
+      allowedCardNetworks.forEach(async ({ value }, index) => {
+        const asset = await assets.getCardNetworkAsset(value);
 
-          const label = document.createElement('label');
+        const label = document.createElement('label');
 
-          const img = document.createElement('img');
-          img.alt = asset.alt;
-          img.src = asset.src;
-          img.title = asset.alt;
+        const img = document.createElement('img');
+        img.alt = asset.alt;
+        img.src = asset.src;
+        img.title = asset.alt;
 
-          label.append(img);
-          cardNetworkElement.append(label);
+        label.append(img);
+        cardNetworkElement.append(label);
 
-          // if not co-badged, only image is enough
-          if (!canSelectCardNetwork) return;
+        // if not co-badged, only image is enough
+        if (!canSelectCardNetwork) return;
 
-          // otherwise create a selectable radio input
-          const input = document.createElement('input');
-          input.ariaLabel = asset.alt;
-          input.checked = !index;
-          input.name = 'preferredNetwork';
-          input.type = 'radio';
-          input.value = value;
+        // otherwise create a selectable radio input
+        const input = document.createElement('input');
+        input.ariaLabel = asset.alt;
+        input.checked = !index;
+        input.name = 'preferredNetwork';
+        input.type = 'radio';
+        input.value = value;
 
-          img.before(input);
-        });
-      },
-      onCardNetworksLoading() {
-        cardNetworkElement.innerHTML = 'Loading...';
-      },
+        img.before(input);
+      });
     },
-  );
+    onCardNetworksLoading() {
+      cardNetworkElement.innerHTML = 'Loading...';
+    },
+  });
 
   // call `PrimerCardManager.submit()` when form is submitted
   cardForm.addEventListener('submit', (event) => {
@@ -149,18 +146,25 @@ async function configureCard() {
   // then render each of them into an HTML element
   const cardNumberId = 'card-number';
   document.getElementById(cardNumberId!)!.innerHTML = '';
-  cardNumberInput?.render(cardNumberId, {
-    placeholder: '4321 1234 9876 6789',
-    style,
-  });
+  cardNumberInput
+    ?.render(cardNumberId, {
+      ariaLabel: 'Card number',
+      placeholder: '4321 1234 9876 6789',
+      style,
+    })
+    .then(() => cardNumberInput.focus());
 
   const cardSecurityCodeId = 'card-security-code';
   document.getElementById(cardSecurityCodeId!)!.innerHTML = '';
-  cvvInput?.render(cardSecurityCodeId, { style });
+  cvvInput?.render(cardSecurityCodeId, {
+    ariaLabel: 'Security code',
+    style,
+  });
 
   const cardExpiryId = 'card-expiry';
   document.getElementById(cardExpiryId!)!.innerHTML = '';
   expiryInput?.render(cardExpiryId, {
+    ariaLabel: 'Expiry date',
     placeholder: '01/25',
     style,
   });
@@ -183,6 +187,12 @@ const style: CheckoutStyle = {
       borderWidth: '1px',
       height: '40px',
       paddingHorizontal: 8,
+    },
+    error: {
+      borderColor: 'red',
+      borderStyle: 'solid',
+      color: 'red',
+      placeholder: { color: 'lightpink' },
     },
   },
 };
