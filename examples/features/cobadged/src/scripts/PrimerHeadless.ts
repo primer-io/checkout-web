@@ -12,24 +12,13 @@ const { Primer } = window as unknown as {
 const { clientToken } = await post<ClientSession>('/api/client-session');
 
 const primer = await Primer.createHeadless(clientToken || '');
-const cardForm = document.querySelector('#card') as HTMLFormElement;
+const assets = primer.getAssetsManager();
+const cardForm = document.getElementById('card') as HTMLFormElement;
+const supportedCardNetworksElement = document.getElementById(
+  'supported-card-networks',
+)!;
 
 primer.configure({
-  onCheckoutFail(error, _data, handler) {
-    console.log(error);
-    handler?.showErrorMessage();
-    cardForm.querySelector('button')!.disabled = false;
-    const errorElement = document.querySelector('#error') as HTMLElement;
-    errorElement.style.display = '';
-    errorElement.innerText = error.message;
-  },
-  onCheckoutComplete(data) {
-    cardForm.innerHTML = `
-      <p>Payment successful.</p>
-      <p>Payment ID: <code>${data.payment.id}</code></p>
-      <p>Order ID: <code>${data.payment.orderId}</code></p>
-    `;
-  },
   async onAvailablePaymentMethodsLoad(paymentMethods) {
     for (const paymentMethod of paymentMethods)
       switch (paymentMethod.managerType) {
@@ -49,6 +38,34 @@ primer.configure({
           );
       }
   },
+  onCheckoutFail(error, _data, handler) {
+    console.log(error);
+    handler?.showErrorMessage();
+    cardForm.querySelector('button')!.disabled = false;
+    const errorElement = document.getElementById('error')!;
+    errorElement.style.display = '';
+    errorElement.innerText = error.message;
+  },
+  onCheckoutComplete(data) {
+    cardForm.innerHTML = `
+      <p>Payment successful.</p>
+      <p>Payment ID: <code>${data.payment.id}</code></p>
+      <p>Order ID: <code>${data.payment.orderId}</code></p>
+    `;
+  },
+  // initialize list of all supported card networks
+  onClientSessionUpdate({ paymentMethod: { orderedAllowedCardNetworks } }) {
+    orderedAllowedCardNetworks.forEach(async (network) => {
+      const asset = await assets.getCardNetworkAsset(network);
+
+      const img = document.createElement('img');
+      img.alt = asset.alt;
+      img.src = asset.src;
+      img.title = asset.alt;
+
+      supportedCardNetworksElement.append(img);
+    });
+  },
 });
 
 primer.start();
@@ -56,10 +73,6 @@ primer.start();
 ////////////////////////////////////////////
 
 async function configureCard() {
-  const assets = primer.getAssetsManager();
-  const supportedCardNetworksElement = document.getElementById(
-    'supported-card-networks',
-  )!;
   const cardNetworkElement = document.getElementById('card-network')!;
 
   // TODO: remove casting "as any"
@@ -77,19 +90,6 @@ async function configureCard() {
         canSelectCardNetwork: boolean;
         source: 'LOCAL' | 'LOCAL_FALLBACK' | 'REMOTE';
       }) {
-        // initialize list of all supported card networks
-        if (!supportedCardNetworksElement.innerHTML)
-          allowedCardNetworks.forEach(async ({ value }) => {
-            const asset = await assets.getCardNetworkAsset(value);
-
-            const img = document.createElement('img');
-            img.alt = asset.alt;
-            img.src = asset.src;
-            img.title = asset.alt;
-
-            supportedCardNetworksElement.append(img);
-          });
-
         // reset element state
         cardNetworkElement.innerHTML = '';
 
