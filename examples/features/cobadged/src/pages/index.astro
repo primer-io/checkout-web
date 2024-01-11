@@ -41,7 +41,7 @@ import Layout from '../layouts/Layout.astro';
 
       <button>Pay</button>
 
-      <div id="error" style={{ display: 'none' }}></div>
+      <code id="error" class="ghost"></code>
     </form>
   </main>
 </Layout>
@@ -87,6 +87,10 @@ import Layout from '../layouts/Layout.astro';
 
   .ghost:empty {
     display: none;
+  }
+
+  code {
+    overflow: hidden;
   }
 </style>
 

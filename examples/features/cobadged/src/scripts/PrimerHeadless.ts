@@ -39,11 +39,10 @@ primer.configure({
       }
   },
   onCheckoutFail(error, _data, handler) {
-    console.log(error);
+    console.error(error);
     handler?.showErrorMessage();
     cardForm.querySelector('button')!.disabled = false;
     const errorElement = document.getElementById('error')!;
-    errorElement.style.display = '';
     errorElement.innerText = error.message;
   },
   onCheckoutComplete(data) {
