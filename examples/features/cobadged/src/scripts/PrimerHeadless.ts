@@ -55,13 +55,7 @@ primer.configure({
   // initialize list of all supported card networks
   onClientSessionUpdate({ paymentMethod: { orderedAllowedCardNetworks } }) {
     orderedAllowedCardNetworks.forEach(async (network) => {
-      const asset = await assets.getCardNetworkAsset(network);
-
-      const img = document.createElement('img');
-      img.alt = asset.alt;
-      img.src = asset.src;
-      img.title = asset.alt;
-
+      const img = createNetworkImage(network);
       supportedCardNetworksElement.append(img);
     });
   },
@@ -74,53 +68,57 @@ primer.start();
 async function configureCard() {
   const cardNetworkElement = document.getElementById('card-network')!;
 
+  // TODO: remove types and infer from Primer
+  type CardNetworks = {
+    items: CardNetwork[];
+    preferred: CardNetwork;
+  };
+  type CardNetwork = {
+    allowed: boolean;
+    displayName: string;
+    network: string;
+  };
+
   // @ts-expect-error TODO: remove this comment when package has correct type
   const cardManager = await primer.createPaymentMethodManager('PAYMENT_CARD', {
     // this is the most important event for co-badged cards
-    onCardNetworksChange({
-      allowedCardNetworks,
-      canSelectCardNetwork,
-      source,
-    }: // TODO: remove type and infer from Primer
-    {
-      allowedCardNetworks: { value: string }[];
-      canSelectCardNetwork: boolean;
-      source: 'LOCAL' | 'LOCAL_FALLBACK' | 'REMOTE';
+    async onCardNetworksChange({
+      detectedCardNetworks,
+      selectableCardNetworks, // TODO: remove type and infer from Primer
+    }: {
+      detectedCardNetworks: CardNetworks;
+      selectableCardNetworks: CardNetworks;
     }) {
       // reset element state
       cardNetworkElement.innerHTML = '';
 
-      // only trust 'REMOTE' or 'LOCAL-FALLBACK' sources for co-badged
-      if (source === 'LOCAL') return;
+      // co-badged, create options for customer to select network
+      if (selectableCardNetworks)
+        return selectableCardNetworks.items.forEach(
+          async ({ displayName, network }) => {
+            const label = document.createElement('label');
 
-      // either display the only network in a single-badge card,
-      // or create options for customer to select network in co-badged card
-      allowedCardNetworks.forEach(async ({ value }, index) => {
-        const asset = await assets.getCardNetworkAsset(value);
+            const input = document.createElement('input');
+            input.ariaLabel = displayName;
+            input.checked =
+              selectableCardNetworks.preferred?.network === network;
+            input.name = 'cardNetwork';
+            input.type = 'radio';
+            input.value = network;
 
-        const label = document.createElement('label');
+            const img = await createNetworkImage(network);
 
-        const img = document.createElement('img');
-        img.alt = asset.alt;
-        img.src = asset.src;
-        img.title = asset.alt;
+            label.append(input, img);
+            cardNetworkElement.append(label);
+          },
+        );
 
-        label.append(img);
-        cardNetworkElement.append(label);
-
-        // if not co-badged, only image is enough
-        if (!canSelectCardNetwork) return;
-
-        // otherwise create a selectable radio input
-        const input = document.createElement('input');
-        input.ariaLabel = asset.alt;
-        input.checked = !index;
-        input.name = 'preferredNetwork';
-        input.type = 'radio';
-        input.value = value;
-
-        img.before(input);
-      });
+      // not co-badged, display the most likely network in a single-badge card
+      const mostLikelyCard =
+        detectedCardNetworks.preferred ?? detectedCardNetworks.items[0];
+      if (!mostLikelyCard) return;
+      const img = await createNetworkImage(mostLikelyCard.network);
+      cardNetworkElement.append(img);
     },
     onCardNetworksLoading() {
       cardNetworkElement.innerHTML = 'Loading...';
@@ -132,10 +130,10 @@ async function configureCard() {
     event.preventDefault();
     cardForm.querySelector('button')!.disabled = true;
     const form = cardForm.elements as unknown as {
-      preferredNetwork?: RadioNodeList;
+      cardNetwork?: RadioNodeList;
     };
-    const preferredNetwork = form.preferredNetwork?.value;
-    cardManager?.submit({ preferredNetwork });
+    const cardNetwork = form.cardNetwork?.value;
+    cardManager?.submit({ cardNetwork });
   });
 
   // create card's secure, Primer hosted inputs
@@ -174,6 +172,17 @@ async function configureCard() {
   cardholderName.addEventListener('input', () => {
     cardManager?.setCardholderName(cardholderName.value);
   });
+}
+
+async function createNetworkImage(network: string) {
+  const asset = await assets.getCardNetworkAsset(network);
+
+  const img = document.createElement('img');
+  img.alt = asset.displayName;
+  img.src = asset.cardUrl;
+  img.title = asset.displayName;
+
+  return img;
 }
 
 // style for all Primer hosted inputs
