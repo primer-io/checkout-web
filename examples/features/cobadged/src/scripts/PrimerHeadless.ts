@@ -114,10 +114,10 @@ async function configureCard() {
         );
 
       // not co-badged, display the most likely network in a single-badge card
-      const mostLikelyCard =
+      const mostLikelyNetwork =
         detectedCardNetworks.preferred ?? detectedCardNetworks.items[0];
-      if (!mostLikelyCard) return;
-      const img = await createNetworkImage(mostLikelyCard.network);
+      if (!mostLikelyNetwork) return;
+      const img = await createNetworkImage(mostLikelyNetwork.network);
       cardNetworkElement.append(img);
     },
     onCardNetworksLoading() {
