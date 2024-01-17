@@ -6,7 +6,7 @@ It uses [Astro](https://astro.build) as the base tool, but feel free to build yo
 
 ## Running on your browser
 
-[Click here to immediately launch it on your browser](https://stackblitz.com/github/primer-io/checkout-web/tree/main/examples/cobadged).
+[Click here to immediately launch it on your browser](https://stackblitz.com/github/primer-io/checkout-web/tree/main/examples/features/cobadged).
 
 Once it's open, make sure to:
 
