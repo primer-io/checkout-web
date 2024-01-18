@@ -55,7 +55,7 @@ primer.configure({
   // initialize list of all supported card networks
   onClientSessionUpdate({ paymentMethod: { orderedAllowedCardNetworks } }) {
     orderedAllowedCardNetworks.forEach(async (network) => {
-      const img = createNetworkImage(network);
+      const img = await createNetworkImage(network);
       supportedCardNetworksElement.append(img);
     });
   },
