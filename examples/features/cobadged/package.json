@@ -12,9 +12,9 @@
   },
   "dependencies": {
     "@primer-io/checkout-web": "^2.35.1",
-    "astro": "^3.4.3"
+    "astro": "^4.2.1"
   },
   "devDependencies": {
-    "sass": "^1.69.7"
+    "sass": "^1.70.0"
   }
 }

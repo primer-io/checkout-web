@@ -20,16 +20,16 @@
     "update": "bunx npm-check-updates --root -u -ws && bun i"
   },
   "devDependencies": {
-    "@commitlint/config-conventional": "^18.4.0",
-    "@typescript-eslint/eslint-plugin": "^6.11.0",
-    "@typescript-eslint/parser": "^6.11.0",
-    "@vitest/coverage-v8": "^0.34.6",
-    "commitlint": "^18.4.1",
+    "@commitlint/config-conventional": "^18.4.4",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "@typescript-eslint/parser": "^6.19.0",
+    "@vitest/coverage-v8": "^1.2.1",
+    "commitlint": "^18.4.4",
     "concurrently": "^8.2.2",
-    "eslint": "^8.53.0",
-    "prettier": "^3.1.0",
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.4",
     "prettier-plugin-organize-imports": "^3.2.4",
-    "typescript": "^5.2.2",
-    "vitest": "^0.34.6"
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.1"
   }
 }
