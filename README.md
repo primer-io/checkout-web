@@ -1,8 +1,8 @@
 ![Primer Banner](https://github.com/primer-io/checkout-web/raw/main/images/primer-banner.png)
 
-# 💳 Primer Example Web
+# 💳 Checkout Example for Primer Web SDK
 
-This repository contains examples of how to integrate Primer's Web SDK.
+This repository contains examples of how to integrate [Primer's Web SDK](https://primer.io/docs/sdk/web/2.x.x/).
 
 Look at the folder `/examples` for example integration apps with our Web SDK.
 
