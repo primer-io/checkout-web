@@ -4,7 +4,7 @@ import { post } from './post';
 describe('post', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    const response = { json: () => {} };
+    const response = { json: () => ({}) };
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(response as any);
   });
 
@@ -28,7 +28,7 @@ describe('post', () => {
     });
   });
 
-  it.only('should handle errors', async () => {
+  it('should handle errors', async () => {
     const error = { description: 'description' };
     vi.mocked(fetch).mockResolvedValueOnce({ json: () => ({ error }) } as any);
 

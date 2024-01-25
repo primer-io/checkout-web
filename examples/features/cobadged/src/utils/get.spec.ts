@@ -6,10 +6,8 @@ describe('get', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-
-    const json = {};
-    const response = { json: () => json };
-    fetch.mockResolvedValueOnce(response as any);
+    const response = { json: () => ({}) };
+    fetch.mockResolvedValue(response as any);
   });
 
   it('should fetch', async () => {
