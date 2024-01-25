@@ -1,4 +1,4 @@
-![Primer Banner](https://github.com/primer-io/checkout-web/raw/main/images/primer-banner.png)
+![Primer Banner](./images/primer-banner.png)
 
 # 💳 Checkout Example for Primer Web SDK
 
