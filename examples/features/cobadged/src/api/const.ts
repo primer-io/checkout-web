@@ -6,4 +6,4 @@ export const primerHeaders: HeadersInit = {
   'Legacy-Workflows': 'false',
 };
 
-export const primerApiUrl = 'https://api.staging.primer.io';
+export const primerApiUrl = 'https://api.sandbox.primer.io';
