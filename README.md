@@ -6,6 +6,6 @@ This repository contains examples of how to integrate [Primer's Web SDK](https:/
 
 Look at the folder `/examples` for example integration apps with our Web SDK.
 
-| Example | Description |
-| ------- | ----------- |
+| Example                                                             | Description                                                                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
 | [Co-Badged Cards on Headless Checkout](/examples/features/cobadged) | This example demonstrates how to integrate a simple card form using Headless Checkout that handles co-badged cards. |
