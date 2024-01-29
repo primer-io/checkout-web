@@ -105,7 +105,7 @@ async function configureCard() {
       cardNetworkElement.append(img);
     },
     onCardNetworksLoading() {
-      cardNetworkElement.innerHTML = 'Loading...';
+      cardNetworkElement.innerHTML = '<span class="spinner" />';
     },
   });
 
