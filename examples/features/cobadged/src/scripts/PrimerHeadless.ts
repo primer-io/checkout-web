@@ -1,12 +1,6 @@
-import type { CheckoutStyle } from '@primer-io/checkout-web';
+import { Primer, type CheckoutStyle } from '@primer-io/checkout-web';
 import type { ClientSession } from '../api/createClientSession';
 import { post } from '../utils/post';
-
-// // TODO: remove CDN and import from npm
-await import('https://sdk.primer.io/web/v2.37.0/Primer.min.js' as const);
-const { Primer } = window as unknown as {
-  Primer: (typeof import('@primer-io/checkout-web'))['Primer'];
-};
 
 const { clientToken } = await post<ClientSession>('/api/client-session');
 
