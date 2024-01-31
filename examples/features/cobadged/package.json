@@ -11,7 +11,7 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "@primer-io/checkout-web": "^2.36.0",
+    "@primer-io/checkout-web": "^2.37.1",
     "astro": "^4.2.4"
   },
   "devDependencies": {

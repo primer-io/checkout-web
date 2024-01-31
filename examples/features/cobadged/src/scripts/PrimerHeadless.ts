@@ -1,13 +1,6 @@
-// import { Primer, type CheckoutStyle } from '@primer-io/checkout-web';
-import { type CheckoutStyle } from '@primer-io/checkout-web';
-import { type ClientSession } from '../api/createClientSession';
+import { Primer, type CheckoutStyle } from '@primer-io/checkout-web';
+import type { ClientSession } from '../api/createClientSession';
 import { post } from '../utils/post';
-
-// TODO: remove preview and import released version
-await import('https://sdk.dev.primer.io/web/preview-1579/Primer.min.js');
-const { Primer } = window as unknown as {
-  Primer: (typeof import('@primer-io/checkout-web'))['Primer'];
-};
 
 const { clientToken } = await post<ClientSession>('/api/client-session');
 
@@ -53,8 +46,8 @@ primer.configure({
     `;
   },
   // initialize list of all supported card networks
-  onClientSessionUpdate({ paymentMethod: { orderedAllowedCardNetworks } }) {
-    orderedAllowedCardNetworks.forEach(async (network) => {
+  onClientSessionUpdate({ paymentMethod }) {
+    paymentMethod?.orderedAllowedCardNetworks?.forEach(async (network) => {
       const img = await createNetworkImage(network);
       supportedCardNetworksElement.append(img);
     });
@@ -68,26 +61,11 @@ primer.start();
 async function configureCard() {
   const cardNetworkElement = document.getElementById('card-network')!;
 
-  // TODO: remove types and infer from Primer
-  type CardNetworks = {
-    items: CardNetwork[];
-    preferred: CardNetwork;
-  };
-  type CardNetwork = {
-    allowed: boolean;
-    displayName: string;
-    network: string;
-  };
-
-  // @ts-expect-error TODO: remove this comment when package has correct type
   const cardManager = await primer.createPaymentMethodManager('PAYMENT_CARD', {
     // this is the most important event for co-badged cards
     async onCardNetworksChange({
       detectedCardNetworks,
-      selectableCardNetworks, // TODO: remove type and infer from Primer
-    }: {
-      detectedCardNetworks: CardNetworks;
-      selectableCardNetworks: CardNetworks;
+      selectableCardNetworks,
     }) {
       // reset element state
       cardNetworkElement.innerHTML = '';
@@ -121,7 +99,7 @@ async function configureCard() {
       cardNetworkElement.append(img);
     },
     onCardNetworksLoading() {
-      cardNetworkElement.innerHTML = 'Loading...';
+      cardNetworkElement.innerHTML = '<span class="spinner" />';
     },
   });
 
