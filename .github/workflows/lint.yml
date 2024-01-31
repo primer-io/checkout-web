@@ -17,9 +17,9 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
 
-      - uses: oven-sh/setup-bun@v1
+      - uses: oven-sh/setup-bun@9b21598af8d4dfc302e5a30250007de0fda92acc
 
       - run: bun i --frozen-lockfile
 
