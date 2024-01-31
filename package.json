@@ -6,6 +6,12 @@
   "workspaces": [
     "examples/*/*"
   ],
+  "license": "GPL-3.0-only",
+  "author": {
+    "email": "developers@primer.io",
+    "name": "Primer",
+    "url": "https://primer.io"
+  },
   "scripts": {
     "lint": "concurrently bun:lint:*",
     "lint:commit": "commitlint --from origin/main --to HEAD --verbose",
