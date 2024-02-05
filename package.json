@@ -6,7 +6,7 @@
   "workspaces": [
     "examples/*/*"
   ],
-  "license": "GPL-3.0-only",
+  "license": "MIT",
   "author": {
     "email": "developers@primer.io",
     "name": "Primer",
