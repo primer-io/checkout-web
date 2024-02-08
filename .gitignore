@@ -8,3 +8,7 @@ storybook-static
 .env
 .solid
 .vercel
+
+**/.vscode
+!**/.vscode/extensions.json
+!**/.vscode/launch.json
