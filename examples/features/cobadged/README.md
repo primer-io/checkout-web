@@ -4,6 +4,16 @@ In this example we integrate Primer's Web SDK v2 headless with co-badged cards.
 
 It uses [Astro](https://astro.build) as the base tool, but feel free to build your website and server however you'd like.
 
+## Running on your browser
+
+[Click here to immediately launch it on your browser](https://stackblitz.com/github/primer-io/checkout-web/tree/main/examples/features/cobadged).
+
+Once it's open, make sure to:
+
+1. Rename `.env.example` to `.env`
+2. Get an `API_KEY` from your Primer Dashboard and paste it there
+   - Example: `API_KEY=1234-1234-1234-1234`
+
 ## Running locally
 
 1. Install [Bun](https://bun.sh)
